@@ -9,6 +9,8 @@ module.exports = {
          colors: {
             ivory: "#F8F8F8",
             peach: "#ffcccb",
+            lightPeach: "#ffe5e4",
+            lightBlue: "#e4ecff",
          },
       },
    },
