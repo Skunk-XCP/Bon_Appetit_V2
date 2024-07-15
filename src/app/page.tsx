@@ -25,9 +25,9 @@ const typedRecipesData: RecipeType[] = recipesData.recipes as RecipeType[];
 export default function Home() {
    return (
       <main className="items-center bg-ivory">
-         <h1 className="bg-red-500 text-4xl text-center ">
+         <p className="bg-red-500 text-4xl text-center ">
             Welcome to My Recipe App
-         </h1>
+         </p>
          <ul className="card-list">
             {typedRecipesData.map((recipe) => (
                <li key={recipe.id}>

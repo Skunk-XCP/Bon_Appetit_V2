@@ -34,10 +34,20 @@ const RecipePage: React.FC<RecipeProps> = ({
          <div className="flex justify-evenly items-end">
             <div className="bg-lightBlue rounded-lg p-4 mb-12">
                <dt className="text-lg mb-1 text-black">
-                  <strong>Ustensils:</strong>
+                  <strong>Appareils:</strong>
                </dt>
-               <dd className="list-disc list-inside text-black ml-6">
-                  {ustensils.join(", ")}
+               <dd className="list-disc list-inside text-black ml-6 mb-4">
+                  {appliance}
+               </dd>
+               <dt className="text-lg mb-1 text-black">
+                  <strong>Ustensiles:</strong>
+               </dt>
+               <dd>
+                  <ul className="list-disc list-inside text-black ml-6">
+                     {ustensils.map((ustensil, index) => (
+                        <li key={index}>{ustensil}</li>
+                     ))}
+                  </ul>
                </dd>
             </div>
 
@@ -57,10 +67,10 @@ const RecipePage: React.FC<RecipeProps> = ({
 
             <div className="bg-lightBlue rounded-lg p-4 mb-12">
                <p className="text-sm mb-2">
-                  <strong>Servings:</strong> {servings}
+                  <strong>Portions:</strong> {servings}
                </p>
                <dt className="text-lg mb-1 text-black">
-                  <strong>Ingredients:</strong>
+                  <strong>Ingrédients:</strong>
                </dt>
                <dd>
                   <ul className="list-disc list-inside text-black ml-6">
@@ -79,9 +89,9 @@ const RecipePage: React.FC<RecipeProps> = ({
          </div>
 
          <div>
-            <div className="flex justify-center text-lg mb-10">
-               <p className="text-sm">
-                  <strong>Time:</strong> {time} minutes
+            <div className="text-lg mb-4 mt-10">
+               <p className="recipe-time text-sm">
+                  <strong>Temps:</strong> {time} minutes
                </p>
             </div>
             <div className="bg-ivory rounded-lg p-4 recipe-description">
