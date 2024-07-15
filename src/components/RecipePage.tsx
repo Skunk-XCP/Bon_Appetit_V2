@@ -12,11 +12,11 @@ type RecipeProps = {
    image: string;
    name: string;
    servings: number;
-   ingredients: Ingredient[];
+   ingredients: Ingredient[] | string;
    time: number;
    description: string;
    appliance: string;
-   ustensils: string[];
+   ustensils: string[] | string;
 };
 
 const RecipePage: React.FC<RecipeProps> = ({
@@ -29,6 +29,10 @@ const RecipePage: React.FC<RecipeProps> = ({
    appliance,
    ustensils,
 }) => {
+   const ustensilsArray: string[] =
+      typeof ustensils === "string" ? JSON.parse(ustensils) : ustensils;
+   const ingredientsArray: Ingredient[] =
+      typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
    return (
       <article className="p-8 border border-none shadow-none">
          <div className="flex justify-evenly items-end">
@@ -44,7 +48,7 @@ const RecipePage: React.FC<RecipeProps> = ({
                </dt>
                <dd>
                   <ul className="list-disc list-inside text-black ml-6">
-                     {ustensils.map((ustensil, index) => (
+                     {ustensilsArray.map((ustensil, index) => (
                         <li key={index}>{ustensil}</li>
                      ))}
                   </ul>
@@ -74,7 +78,7 @@ const RecipePage: React.FC<RecipeProps> = ({
                </dt>
                <dd>
                   <ul className="list-disc list-inside text-black ml-6">
-                     {ingredients.map((ingredient, index) => (
+                     {ingredientsArray.map((ingredient, index) => (
                         <li key={index}>
                            {ingredient.quantity
                               ? `${ingredient.quantity} `

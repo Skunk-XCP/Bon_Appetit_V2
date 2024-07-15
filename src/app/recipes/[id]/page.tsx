@@ -1,18 +1,16 @@
-import recipesData from "@/data/recipes.json";
-// Importe des utilitaires de métadonnées de Next.js pour configurer des données adaptées au référencement SEO.
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import RecipePage from "../../../components/RecipePage";
+"use client";
 
-// Définis un type TypeScript pour les ingrédients, avec quantité et unité optionnelles.
+import RecipePage from "@/components/RecipePage";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 type Ingredient = {
    ingredient: string;
    quantity?: number;
    unit?: string;
 };
 
-// Définis un type TypeScript pour une recette.
-type RecipeType = {
+type RecipeProps = {
    id: number;
    image: string;
    name: string;
@@ -24,56 +22,42 @@ type RecipeType = {
    ustensils: string[];
 };
 
-// Définis le type TypeScript pour les propriétés attendues par les composants de la page,
-// spécifiquement incluant les paramètres de route.
-type Props = {
-   params: {
-      id: string;
-   };
-};
+export default function RecipeDetailPage() {
+   const params = useParams() as { id: string };
+   const { id } = params;
+   const [recipe, setRecipe] = useState<RecipeProps | null>(null);
+   const [error, setError] = useState<string | null>(null);
 
-// Fonction asynchrone pour générer des chemins statiques pour la génération statique de Next.js.
-export async function generateStaticPaths() {
-   const paths = (recipesData as { recipes: RecipeType[] }).recipes.map(
-      (recipe) => ({
-         id: recipe.id.toString(),
-      })
-   );
-   return paths;
-}
+   useEffect(() => {
+      async function fetchRecipe() {
+         try {
+            if (id) {
+               const res = await fetch(`/api/recipe?id=${id}`);
+               if (!res.ok) {
+                  throw new Error(`HTTP error! status: ${res.status}`);
+               }
+               const data = await res.json();
+               setRecipe(data);
+            }
+         } catch (err) {
+            if (err instanceof Error) {
+               setError(err.message);
+            } else {
+               setError("An unknown error occurred");
+            }
+         }
+      }
 
-// Fonction asynchrone pour générer des métadonnées pour le référencement SEO,
-// utilisant l'identifiant de recette passé via l'URL de la page.
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-   // Trouve la recette qui correspond à l'identifiant donné.
-   const recipe = (recipesData as { recipes: RecipeType[] }).recipes.find(
-      (recipe) => recipe.id.toString() === params.id
-   );
+      fetchRecipe();
+   }, [id]);
 
-   // Retourne des métadonnées pour le SEO ou un titre par défaut si la recette n'est pas trouvée.
-   if (!recipe) {
-      return {
-         title: "Recette non trouvée",
-      };
+   if (error) {
+      return <div>Error: {error}</div>;
    }
 
-   return {
-      title: recipe.name,
-      description: recipe.description,
-   };
-}
-
-// Fonction asynchrone qui gère le rendu du composant RecipePage.
-const RecipeRoute = async ({ params }: Props) => {
-   const recipe = (recipesData as { recipes: RecipeType[] }).recipes.find(
-      (recipe) => recipe.id.toString() === params.id
-   );
-
    if (!recipe) {
-      notFound();
+      return <div>Loading...</div>;
    }
 
    return <RecipePage {...recipe} />;
-};
-
-export default RecipeRoute;
+}

@@ -1,5 +1,9 @@
+"use client";
+
 import RecipeCard from "@/components/RecipeCard";
-import recipesData from "@/data/recipes.json";
+import { useEffect, useState } from "react";
+// import recipesData from "@/data/recipes.json";
+// import { PrismaClient } from '@prisma/client';
 
 type Ingredient = {
    ingredient: string;
@@ -20,16 +24,23 @@ type RecipeType = {
    ustensils: string[];
 };
 
-const typedRecipesData: RecipeType[] = recipesData.recipes as RecipeType[];
-
 export default function Home() {
+   const [recipes, setRecipes] = useState<RecipeType[]>([]);
+
+   useEffect(() => {
+      async function fetchRecipes() {
+         const res = await fetch("/api/recipes");
+         const data = await res.json();
+         setRecipes(data);
+      }
+
+      fetchRecipes();
+   }, []);
+
    return (
       <main className="items-center bg-ivory">
-         <p className="bg-red-500 text-4xl text-center ">
-            Welcome to My Recipe App
-         </p>
          <ul className="card-list">
-            {typedRecipesData.map((recipe) => (
+            {recipes.map((recipe) => (
                <li key={recipe.id}>
                   <RecipeCard {...recipe} />
                </li>
