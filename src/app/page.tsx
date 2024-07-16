@@ -2,8 +2,6 @@
 
 import RecipeCard from "@/components/RecipeCard";
 import { useEffect, useState } from "react";
-// import recipesData from "@/data/recipes.json";
-// import { PrismaClient } from '@prisma/client';
 
 type Ingredient = {
    ingredient: string;
