@@ -5,7 +5,7 @@ import React from "react";
 type RecipeProps = {
    id: number;
    image: string;
-   name: string;
+   title: string;
    author: string;
    time: number;
 };
@@ -13,7 +13,7 @@ type RecipeProps = {
 const RecipeCard: React.FC<RecipeProps> = ({
    id,
    image,
-   name,
+   title,
    author,
    time,
 }) => {
@@ -23,7 +23,7 @@ const RecipeCard: React.FC<RecipeProps> = ({
             <figure>
                <Image
                   src={`/pictures/${image}`}
-                  alt={name}
+                  alt={`Image de la recette ${title}`}
                   width={500}
                   height={300}
                   className="custom-picture object-cover rounded-lg mb-2"
@@ -33,7 +33,7 @@ const RecipeCard: React.FC<RecipeProps> = ({
                   <span className="text-black absolute top-5 right-5 bg-yellow-200 rounded-xl w-16 text-center text-sm">
                      {time} min
                   </span>
-                  <h2 className="ellipsis">{name}</h2>
+                  <h2 className="ellipsis">{title}</h2>
                   <p className="mb-2 text-black">{author}</p>
                </figcaption>
             </figure>

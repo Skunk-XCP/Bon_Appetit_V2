@@ -10,7 +10,7 @@ type Ingredient = {
 type RecipeProps = {
    id: number;
    image: string;
-   name: string;
+   title: string;
    servings: number;
    ingredients: Ingredient[] | string;
    time: number;
@@ -21,7 +21,7 @@ type RecipeProps = {
 
 const RecipePage: React.FC<RecipeProps> = ({
    image,
-   name,
+   title,
    servings,
    ingredients,
    time,
@@ -58,14 +58,14 @@ const RecipePage: React.FC<RecipeProps> = ({
             <figure className="mx-8">
                <Image
                   src={`/pictures/${image}`}
-                  alt={name}
+                  alt={`Image de la recette ${title}`}
                   width={500}
                   height={300}
                   className="rounded-lg mb-2"
                   priority
                />
                <figcaption className="text-lg font-semibold">
-                  <h2 className="text-2xl text-center mb-2">{name}</h2>
+                  <h2 className="text-2xl text-center mb-2">{title}</h2>
                </figcaption>
             </figure>
 

@@ -13,7 +13,7 @@ type Ingredient = {
 type RecipeProps = {
    id: number;
    image: string;
-   name: string;
+   title: string;
    servings: number;
    ingredients: Ingredient[];
    time: number;

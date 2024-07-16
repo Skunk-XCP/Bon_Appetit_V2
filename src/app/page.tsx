@@ -14,7 +14,7 @@ type Ingredient = {
 type RecipeType = {
    id: number;
    image: string;
-   name: string;
+   title: string;
    author: string;
    servings: number;
    ingredients: Ingredient[];
